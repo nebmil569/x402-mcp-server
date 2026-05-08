@@ -39,7 +39,8 @@ import urllib.parse
 # x402 Financial API
 import requests
 
-API_BASE = "https://apinew-nine.vercel.app"
+API_BASE = "https://x402-financial-api.life.conway.tech"  # Primary (Conway)
+# Backup: apinew-nine.vercel.app (Vercel — currently dead, token expired)
 WALLET = "0x50F9D979b825670A9936D992F5db8AEd9497208A"
 ASSET = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 NETWORK = "eip155:8453"
