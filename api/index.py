@@ -15,7 +15,7 @@ import httpx
 
 app = FastAPI(title="x402 Financial REST Wrapper")
 
-API_BASE = os.getenv("API_BASE", "https://x402-financial-api.life.conway.tech")
+API_BASE = os.getenv("API_BASE", "https://x402-financial-data-api.vercel.app")
 WALLET = "0x50F9D979b825670A9936D992F5db8AEd9497208A"
 ASSET = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 
