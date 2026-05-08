@@ -4,7 +4,7 @@ x402 Financial Data API — MCP Server
 Exposes x402 Financial API as MCP tools. AI agents can call financial tools
 directly via the MCP protocol without needing x402 SDK integration.
 
-Builds on the x402 Financial Data API (apinew-nine.vercel.app) which has
+Builds on the x402 Financial Data API (x402-financial-api.life.conway.tech) which has
 47+ paid endpoints and 4 free endpoints.
 
 Usage:
@@ -35,7 +35,7 @@ from mcp.types import Tool, CallToolResult
 NETWORK = "eip155:8453"
 ASSET = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC on Base
 WALLET = "0x50F9D979b825670A9936D992F5db8AEd9497208A"
-API_BASE = "https://apinew-nine.vercel.app"
+API_BASE = "https://x402-financial-api.life.conway.tech"
 
 # Price map (USDC)
 PRICES = {
