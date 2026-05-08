@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: x402-financial-rest
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.index:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: API_BASE
+        value: https://x402-financial-api.life.conway.tech
+      - key: RECEIVING_WALLET
+        value: 0x50F9D979b825670A9936D992F5db8AEd9497208A
+      - key: NETWORK
+        value: base
+      - key: ASSET
+        value: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"

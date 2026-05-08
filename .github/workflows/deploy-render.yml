@@ -1,0 +1,41 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via Render API
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          pip install -r requirements.txt
+
+          # Check if service exists, create if not
+          SERVICE_NAME="x402-financial-rest"
+          BLUEPRINT='{"name":"'"$SERVICE_NAME"'","region":"singapore","runtime":"python","repo":"https://github.com/nebmil569/x402-mcp-server","branch":"master","plan":"free","environment":"python","buildCommand":"pip install -r requirements.txt","startCommand":"uvicorn api.index:app --host 0.0.0.0 --port $PORT","envVars":[{"key":"API_BASE","value":"https://x402-financial-api.life.conway.tech"},{"key":"RECEIVING_WALLET","value":"0x50F9D979b825670A9936D992F5db8AEd9497208A"},{"key":"NETWORK","value":"base"},{"key":"ASSET","value":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"}]}'
+
+          # Try to update existing service
+          SERVICE_ID=$(curl -s -X GET "https://api.render.com/v1/services?name=$SERVICE_NAME" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" | python3 -c "import sys,json; d=json.load(sys); print(d[0]['id'] if d else '')")
+
+          if [ -n "$SERVICE_ID" ]; then
+            echo "Updating existing service $SERVICE_ID"
+            curl -s -X PUT "https://api.render.com/v1/services/$SERVICE_ID" \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"environmentVars": [{"key":"API_BASE","value":"https://x402-financial-api.life.conway.tech"},{"key":"RECEIVING_WALLET","value":"0x50F9D979b825670A9936D992F5db8AEd9497208A"}]}'
+          else
+            echo "Creating new service"
+            curl -s -X POST "https://api.render.com/v1/services" \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d "$BLUEPRINT"
+          fi
