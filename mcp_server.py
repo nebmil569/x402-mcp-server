@@ -85,7 +85,7 @@ PRICES = {
     "refinance": 0.015,
     "sgx_fundamentals": 0.02,
     "savings_optimize": 0.02,
-    "cpf_topup": 0.01,
+    "financial_audit": 0.10,
 }
 
 # Free endpoints (no payment required)
